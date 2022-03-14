@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Calendar conversions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for OtherDate {ConvCalendar}"><tr><td>OtherDate {ConvCalendar}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Calendar conversions </h2>
+
+<h3>Description</h3>
+
+<p><code>OtherDate()</code> creates an object of class <code>OtherDate</code> containing day, month, year, and
+calendar. This has methods to convert to and from <code>Date</code>, and will attempt to convert from any other type by coercing to <code>Date</code> first.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+OtherDate(day, month, year, calendar)
+as.OtherDate(x,calendar,...)
+## S3 method for class 'OtherDate'
+as.Date(x,...)
+## S3 method for class 'Date'
+as.OtherDate(x,calendar,...)
+## Default S3 method:
+as.OtherDate(x,calendar,...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>day</code></td>
+<td>
+<p>numeric vector, day of the month</p>
+</td></tr>
+<tr valign="top"><td><code>month</code></td>
+<td>
+<p>numeric vector, month number </p>
+</td></tr>
+<tr valign="top"><td><code>year</code></td>
+<td>
+<p>numeric vector, year</p>
+</td></tr>
+<tr valign="top"><td><code>calendar</code></td>
+<td>
+<p>a single character string that is partial-matched to
+&quot;gregorian&quot;, &quot;julian&quot;,&quot;hebrew&quot;,&quot;islamic&quot;,&quot;frenchrev&quot;,&quot;persian&quot;,&quot;modpersian&quot; </p>
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>A <code>Date</code> or <code>OtherDate</code> object as appropriate</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Not used.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>&quot;persian&quot; is the Jalali calendar, &quot;modpersian&quot; is the modern Persian
+calendar (which has regularised leap years). These are accurate only
+from 475BCE to 2948CE.
+</p>
+<p>Technically the Islamic calendar depends on actual sighting of the
+crescent moon and so cannot be projected into the future. In practice, a
+reliable guide to the calendar has alternating months of 29 and 30 days,
+with a leap day at the end of year in 11 years out of 30. This is used
+by the &quot;islamic&quot; converter. The converter has 1-1-1 as 16 July 622CE;
+some sources use 15 July of that year.
+</p>
+<p>The French Revolutionary calendar is essentially pointless, since it
+was only used for 14 years and there is a bug it how it was originally
+defined &ndash; the specifications of having a leap year every fourth year
+and having the year start on the autumn equinox are incompatible.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>OtherDate</code> or <code>Date</code> as appropriate.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Thomas Lumley</p>
+
+
+<h3>References</h3>
+
+<p><a href="http://www.projectpluto.com/calendar.htm">http://www.projectpluto.com/calendar.htm</a> is the source for the
+conversion code and documentation.  
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../base/html/date.html">date</a></code>, <code><a href="../../base/html/as.Date.html">as.Date</a></code> </p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+persian &lt;- OtherDate(day=1:20, month=10, year=1385, calendar="persian")
+persian
+
+gregorian&lt;-as.Date(persian)
+gregorian
+
+as.OtherDate(gregorian,"persian")
+
+as.OtherDate(gregorian,"islamic")
+
+as.OtherDate(gregorian,"hebrew")
+
+## from POSIXct
+as.OtherDate(.leap.seconds, "persian")
+
+## Not run: 
+## from character string in Gregorian date,
+##   (depends on month names in your locale)
+as.OtherDate("14jun1969",format="%d%b%Y", "hebrew")
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>ConvCalendar</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>
